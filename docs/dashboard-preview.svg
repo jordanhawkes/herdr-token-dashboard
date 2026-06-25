@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="monospace" font-size="13">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#0f172a" rx="8"/>
+  
+  <!-- Header bar -->
+  <rect x="16" y="16" width="200" height="28" fill="#7dd3fc" rx="4"/>
+  <text x="24" y="34" fill="#0f172a" font-weight="bold" font-size="14"> ◆ Token Dashboard</text>
+  <text x="230" y="34" fill="#4b5563" font-style="italic" font-size="12">auto-refresh 3s · 17:14:16</text>
+  
+  <!-- Table header -->
+  <text x="20" y="64" fill="#7dd3fc" font-weight="bold">PANE        AGENT     STATUS    COST      MODEL          MSGS   TOOLS</text>
+  <line x1="20" y1="72" x2="780" y2="72" stroke="#4b5563" stroke-width="2"/>
+  
+  <!-- Row 1: pi -->
+  <text x="20" y="90" fill="#e5e7eb">w653507:p1</text>
+  <text x="120" y="90" fill="#c084fc" font-weight="bold">pi</text>
+  <text x="200" y="90" fill="#4ade80">● idle</text>
+  <text x="290" y="90" fill="#f87171" font-weight="bold">$83.68</text>
+  <text x="370" y="90" fill="#fb923c">gpt-5.5</text>
+  <text x="490" y="90" fill="#6b7280">3462</text>
+  <text x="560" y="90" fill="#6b7280">—</text>
+  
+  <!-- Row 2: opencode working -->
+  <text x="20" y="110" fill="#e5e7eb">w2:p1</text>
+  <text x="120" y="110" fill="#4ade80" font-weight="bold">opencode</text>
+  <text x="200" y="110" fill="#facc15" font-weight="bold">● working</text>
+  <text x="290" y="110" fill="#4ade80">$0.61</text>
+  <text x="370" y="110" fill="#fb923c">glm-5.2</text>
+  <text x="490" y="110" fill="#6b7280">38</text>
+  <text x="560" y="110" fill="#6b7280">28</text>
+  
+  <!-- Row 3: opencode idle -->
+  <text x="20" y="130" fill="#e5e7eb">w651685:p1</text>
+  <text x="120" y="130" fill="#4ade80" font-weight="bold">opencode</text>
+  <text x="200" y="130" fill="#4ade80">● idle</text>
+  <text x="290" y="130" fill="#4b5563">—</text>
+  <text x="370" y="130" fill="#fb923c">gpt-5.5</text>
+  <text x="490" y="130" fill="#6b7280">227</text>
+  <text x="560" y="130" fill="#6b7280">303</text>
+  
+  <!-- Total separator -->
+  <line x1="20" y1="140" x2="780" y2="140" stroke="#facc15" stroke-width="2"/>
+  <text x="20" y="156" fill="#facc15" font-weight="bold">TOTAL                           $84.28                   3727   331</text>
+  
+  <!-- Card 1: pi -->
+  <rect x="16" y="172" width="768" height="70" fill="#1e293b" rx="4" stroke="#4b5563" stroke-width="1"/>
+  <rect x="16" y="172" width="3" height="70" fill="#4b5563"/>
+  <text x="28" y="190" fill="#c084fc" font-weight="bold">pi</text>
+  <text x="44" y="190" fill="#4ade80">●</text>
+  <text x="56" y="190" fill="#4ade80">idle</text>
+  <text x="90" y="190" fill="#fb923c">gpt-5.5</text>
+  <text x="150" y="190" fill="#2dd4bf">(openai-codex)</text>
+  <text x="28" y="208" fill="#6b7280">cwd:</text>
+  <text x="70" y="208" fill="#e5e7eb" font-weight="bold">/Users/davecodes/work/ai-tutor-core</text>
+  <text x="28" y="226" fill="#6b7280">session:</text>
+  <text x="80" y="226" fill="#e5e7eb" font-weight="bold">2d0h</text>
+  <text x="130" y="226" fill="#6b7280">last:</text>
+  <text x="170" y="226" fill="#e5e7eb" font-weight="bold">19:53</text>
+  <text x="220" y="226" fill="#6b7280">msgs:</text>
+  <text x="260" y="226" fill="#e5e7eb" font-weight="bold">3462</text>
+  <text x="310" y="226" fill="#6b7280">compactions:</text>
+  <text x="390" y="226" fill="#facc15">8</text>
+  
+  <!-- Card 2: opencode working -->
+  <rect x="16" y="250" width="768" height="90" fill="#1e293b" rx="4" stroke="#4b5563" stroke-width="1"/>
+  <rect x="16" y="250" width="3" height="90" fill="#4b5563"/>
+  <text x="28" y="268" fill="#4ade80" font-weight="bold">opencode</text>
+  <text x="100" y="268" fill="#facc15" font-weight="bold">●</text>
+  <text x="112" y="268" fill="#facc15" font-weight="bold">working</text>
+  <text x="175" y="268" fill="#fb923c">glm-5.2</text>
+  <text x="225" y="268" fill="#2dd4bf">(opencode-go)</text>
+  <text x="28" y="286" fill="#6b7280">title:</text>
+  <text x="70" y="286" fill="#e5e7eb" font-weight="bold">Add Two Numbers work example</text>
+  <text x="28" y="304" fill="#6b7280">tokens:</text>
+  <text x="75" y="304" fill="#6b7280">in:</text>
+  <text x="95" y="304" fill="#e5e7eb" font-weight="bold">222.5k</text>
+  <text x="140" y="304" fill="#6b7280">out:</text>
+  <text x="170" y="304" fill="#e5e7eb" font-weight="bold">21.7k</text>
+  <text x="210" y="304" fill="#6b7280">cache_r:</text>
+  <text x="265" y="304" fill="#4ade80">767.3k</text>
+  <text x="28" y="322" fill="#6b7280">tools:</text>
+  <text x="70" y="322" fill="#e5e7eb" font-weight="bold">write×10  bash×10  webfetch×6  compress×2</text>
+  
+  <!-- Card 3: opencode idle -->
+  <rect x="16" y="348" width="768" height="90" fill="#1e293b" rx="4" stroke="#4b5563" stroke-width="1"/>
+  <rect x="16" y="348" width="3" height="90" fill="#4b5563"/>
+  <text x="28" y="366" fill="#4ade80" font-weight="bold">opencode</text>
+  <text x="100" y="366" fill="#4ade80">●</text>
+  <text x="112" y="366" fill="#4ade80">idle</text>
+  <text x="150" y="366" fill="#fb923c">gpt-5.5</text>
+  <text x="200" y="366" fill="#2dd4bf">(openai)</text>
+  <text x="28" y="384" fill="#6b7280">title:</text>
+  <text x="70" y="384" fill="#e5e7eb" font-weight="bold">executor.sh usage guide</text>
+  <text x="28" y="402" fill="#6b7280">tokens:</text>
+  <text x="75" y="402" fill="#6b7280">in:</text>
+  <text x="95" y="402" fill="#e5e7eb" font-weight="bold">1.2M</text>
+  <text x="125" y="402" fill="#6b7280">out:</text>
+  <text x="155" y="402" fill="#e5e7eb" font-weight="bold">81.3k</text>
+  <text x="195" y="402" fill="#6b7280">reason:</text>
+  <text x="245" y="402" fill="#e5e7eb" font-weight="bold">41.2k</text>
+  <text x="290" y="402" fill="#6b7280">cache_r:</text>
+  <text x="345" y="402" fill="#4ade80">21.3M</text>
+  <text x="28" y="420" fill="#6b7280">tools:</text>
+  <text x="70" y="420" fill="#e5e7eb" font-weight="bold">bash×112  read×74  apply_patch×26  grep×16  skill×15 ...</text>
+  
+  <!-- Summary line -->
+  <text x="20" y="452" fill="#6b7280">panes: </text>
+  <text x="60" y="452" fill="#e5e7eb" font-weight="bold">3</text>
+  <text x="75" y="452" fill="#6b7280">  cost: </text>
+  <text x="115" y="452" fill="#facc15" font-weight="bold">$84.28</text>
+  <text x="165" y="452" fill="#6b7280">  in: </text>
+  <text x="195" y="452" fill="#e5e7eb" font-weight="bold">1.4M</text>
+  <text x="235" y="452" fill="#6b7280">  out: </text>
+  <text x="270" y="452" fill="#e5e7eb" font-weight="bold">103.0k</text>
+  <text x="320" y="452" fill="#6b7280">  cache: </text>
+  <text x="365" y="452" fill="#4ade80">22.1M</text>
+  
+  <!-- Footer -->
+  <text x="20" y="484" fill="#4b5563" font-style="italic">r refresh  ·  q/esc close  ·  auto-refresh 3s</text>
+</svg>
