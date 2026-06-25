@@ -1,121 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="monospace" font-size="13">
-  <!-- Background -->
-  <rect width="800" height="500" fill="#0f172a" rx="8"/>
-  
-  <!-- Header bar -->
-  <rect x="16" y="16" width="200" height="28" fill="#7dd3fc" rx="4"/>
-  <text x="24" y="34" fill="#0f172a" font-weight="bold" font-size="14"> ◆ Token Dashboard</text>
-  <text x="230" y="34" fill="#4b5563" font-style="italic" font-size="12">auto-refresh 3s · 17:14:16</text>
-  
-  <!-- Table header -->
-  <text x="20" y="64" fill="#7dd3fc" font-weight="bold">PANE        AGENT     STATUS    COST      MODEL          MSGS   TOOLS</text>
-  <line x1="20" y1="72" x2="780" y2="72" stroke="#4b5563" stroke-width="2"/>
-  
-  <!-- Row 1: pi -->
-  <text x="20" y="90" fill="#e5e7eb">w653507:p1</text>
-  <text x="120" y="90" fill="#c084fc" font-weight="bold">pi</text>
-  <text x="200" y="90" fill="#4ade80">● idle</text>
-  <text x="290" y="90" fill="#f87171" font-weight="bold">$83.68</text>
-  <text x="370" y="90" fill="#fb923c">gpt-5.5</text>
-  <text x="490" y="90" fill="#6b7280">3462</text>
-  <text x="560" y="90" fill="#6b7280">—</text>
-  
-  <!-- Row 2: opencode working -->
-  <text x="20" y="110" fill="#e5e7eb">w2:p1</text>
-  <text x="120" y="110" fill="#4ade80" font-weight="bold">opencode</text>
-  <text x="200" y="110" fill="#facc15" font-weight="bold">● working</text>
-  <text x="290" y="110" fill="#4ade80">$0.61</text>
-  <text x="370" y="110" fill="#fb923c">glm-5.2</text>
-  <text x="490" y="110" fill="#6b7280">38</text>
-  <text x="560" y="110" fill="#6b7280">28</text>
-  
-  <!-- Row 3: opencode idle -->
-  <text x="20" y="130" fill="#e5e7eb">w651685:p1</text>
-  <text x="120" y="130" fill="#4ade80" font-weight="bold">opencode</text>
-  <text x="200" y="130" fill="#4ade80">● idle</text>
-  <text x="290" y="130" fill="#4b5563">—</text>
-  <text x="370" y="130" fill="#fb923c">gpt-5.5</text>
-  <text x="490" y="130" fill="#6b7280">227</text>
-  <text x="560" y="130" fill="#6b7280">303</text>
-  
-  <!-- Total separator -->
-  <line x1="20" y1="140" x2="780" y2="140" stroke="#facc15" stroke-width="2"/>
-  <text x="20" y="156" fill="#facc15" font-weight="bold">TOTAL                           $84.28                   3727   331</text>
-  
-  <!-- Card 1: pi -->
-  <rect x="16" y="172" width="768" height="70" fill="#1e293b" rx="4" stroke="#4b5563" stroke-width="1"/>
-  <rect x="16" y="172" width="3" height="70" fill="#4b5563"/>
-  <text x="28" y="190" fill="#c084fc" font-weight="bold">pi</text>
-  <text x="44" y="190" fill="#4ade80">●</text>
-  <text x="56" y="190" fill="#4ade80">idle</text>
-  <text x="90" y="190" fill="#fb923c">gpt-5.5</text>
-  <text x="150" y="190" fill="#2dd4bf">(openai-codex)</text>
-  <text x="28" y="208" fill="#6b7280">cwd:</text>
-  <text x="70" y="208" fill="#e5e7eb" font-weight="bold">/Users/davecodes/work/ai-tutor-core</text>
-  <text x="28" y="226" fill="#6b7280">session:</text>
-  <text x="80" y="226" fill="#e5e7eb" font-weight="bold">2d0h</text>
-  <text x="130" y="226" fill="#6b7280">last:</text>
-  <text x="170" y="226" fill="#e5e7eb" font-weight="bold">19:53</text>
-  <text x="220" y="226" fill="#6b7280">msgs:</text>
-  <text x="260" y="226" fill="#e5e7eb" font-weight="bold">3462</text>
-  <text x="310" y="226" fill="#6b7280">compactions:</text>
-  <text x="390" y="226" fill="#facc15">8</text>
-  
-  <!-- Card 2: opencode working -->
-  <rect x="16" y="250" width="768" height="90" fill="#1e293b" rx="4" stroke="#4b5563" stroke-width="1"/>
-  <rect x="16" y="250" width="3" height="90" fill="#4b5563"/>
-  <text x="28" y="268" fill="#4ade80" font-weight="bold">opencode</text>
-  <text x="100" y="268" fill="#facc15" font-weight="bold">●</text>
-  <text x="112" y="268" fill="#facc15" font-weight="bold">working</text>
-  <text x="175" y="268" fill="#fb923c">glm-5.2</text>
-  <text x="225" y="268" fill="#2dd4bf">(opencode-go)</text>
-  <text x="28" y="286" fill="#6b7280">title:</text>
-  <text x="70" y="286" fill="#e5e7eb" font-weight="bold">Add Two Numbers work example</text>
-  <text x="28" y="304" fill="#6b7280">tokens:</text>
-  <text x="75" y="304" fill="#6b7280">in:</text>
-  <text x="95" y="304" fill="#e5e7eb" font-weight="bold">222.5k</text>
-  <text x="140" y="304" fill="#6b7280">out:</text>
-  <text x="170" y="304" fill="#e5e7eb" font-weight="bold">21.7k</text>
-  <text x="210" y="304" fill="#6b7280">cache_r:</text>
-  <text x="265" y="304" fill="#4ade80">767.3k</text>
-  <text x="28" y="322" fill="#6b7280">tools:</text>
-  <text x="70" y="322" fill="#e5e7eb" font-weight="bold">write×10  bash×10  webfetch×6  compress×2</text>
-  
-  <!-- Card 3: opencode idle -->
-  <rect x="16" y="348" width="768" height="90" fill="#1e293b" rx="4" stroke="#4b5563" stroke-width="1"/>
-  <rect x="16" y="348" width="3" height="90" fill="#4b5563"/>
-  <text x="28" y="366" fill="#4ade80" font-weight="bold">opencode</text>
-  <text x="100" y="366" fill="#4ade80">●</text>
-  <text x="112" y="366" fill="#4ade80">idle</text>
-  <text x="150" y="366" fill="#fb923c">gpt-5.5</text>
-  <text x="200" y="366" fill="#2dd4bf">(openai)</text>
-  <text x="28" y="384" fill="#6b7280">title:</text>
-  <text x="70" y="384" fill="#e5e7eb" font-weight="bold">executor.sh usage guide</text>
-  <text x="28" y="402" fill="#6b7280">tokens:</text>
-  <text x="75" y="402" fill="#6b7280">in:</text>
-  <text x="95" y="402" fill="#e5e7eb" font-weight="bold">1.2M</text>
-  <text x="125" y="402" fill="#6b7280">out:</text>
-  <text x="155" y="402" fill="#e5e7eb" font-weight="bold">81.3k</text>
-  <text x="195" y="402" fill="#6b7280">reason:</text>
-  <text x="245" y="402" fill="#e5e7eb" font-weight="bold">41.2k</text>
-  <text x="290" y="402" fill="#6b7280">cache_r:</text>
-  <text x="345" y="402" fill="#4ade80">21.3M</text>
-  <text x="28" y="420" fill="#6b7280">tools:</text>
-  <text x="70" y="420" fill="#e5e7eb" font-weight="bold">bash×112  read×74  apply_patch×26  grep×16  skill×15 ...</text>
-  
-  <!-- Summary line -->
-  <text x="20" y="452" fill="#6b7280">panes: </text>
-  <text x="60" y="452" fill="#e5e7eb" font-weight="bold">3</text>
-  <text x="75" y="452" fill="#6b7280">  cost: </text>
-  <text x="115" y="452" fill="#facc15" font-weight="bold">$84.28</text>
-  <text x="165" y="452" fill="#6b7280">  in: </text>
-  <text x="195" y="452" fill="#e5e7eb" font-weight="bold">1.4M</text>
-  <text x="235" y="452" fill="#6b7280">  out: </text>
-  <text x="270" y="452" fill="#e5e7eb" font-weight="bold">103.0k</text>
-  <text x="320" y="452" fill="#6b7280">  cache: </text>
-  <text x="365" y="452" fill="#4ade80">22.1M</text>
-  
-  <!-- Footer -->
-  <text x="20" y="484" fill="#4b5563" font-style="italic">r refresh  ·  q/esc close  ·  auto-refresh 3s</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1455 728" width="1455" height="728">
+  <rect width="100%" height="100%" rx="10" fill="#0f172a"/>
+  <style>text{font-family:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;font-size:14px;dominant-baseline:text-before-edge;white-space:pre}</style>
+  <rect x="22.0" y="21.0" width="19.2" height="18.0" fill="#7dd3fc"/>
+  <text x="22.0" y="22.0" fill="#e5e7eb">  </text>
+  <rect x="41.2" y="21.0" width="182.4" height="18.0" fill="#7dd3fc"/>
+  <text x="41.2" y="22.0" fill="#0f172a" font-weight="700"> ◆ Token Dashboard </text>
+  <rect x="223.6" y="21.0" width="19.2" height="18.0" fill="#7dd3fc"/>
+  <text x="223.6" y="22.0" fill="#e5e7eb">  </text>
+  <text x="242.8" y="22.0" fill="#4b5563" font-style="italic">  auto-refresh 3s  ·  17:25:08</text>
+  <text x="22.0" y="58.0" fill="#e5e7eb">  </text>
+  <text x="41.2" y="58.0" fill="#7dd3fc" font-weight="700">PANE        AGENT     STATUS    COST      MODEL          MSGS   TOOLS </text>
+  <text x="22.0" y="76.0" fill="#e5e7eb">  </text>
+  <text x="41.2" y="76.0" fill="#4b5563">───────────────────────────────────────────────────────────────────────</text>
+  <text x="22.0" y="94.0" fill="#e5e7eb">  w653507:p1  </text>
+  <text x="156.4" y="94.0" fill="#c083fc" font-weight="700">pi</text>
+  <text x="175.6" y="94.0" fill="#e5e7eb">        </text>
+  <text x="252.4" y="94.0" fill="#49de80">●</text>
+  <text x="262.0" y="94.0" fill="#e5e7eb"> idle    </text>
+  <text x="348.4" y="94.0" fill="#f87171" font-weight="700">$83.68</text>
+  <text x="406.0" y="94.0" fill="#e5e7eb">    </text>
+  <text x="444.4" y="94.0" fill="#fb923c">gpt-5.5</text>
+  <text x="511.6" y="94.0" fill="#e5e7eb">        </text>
+  <text x="588.4" y="94.0" fill="#6b7180">3462</text>
+  <text x="626.8" y="94.0" fill="#e5e7eb">   </text>
+  <text x="655.6" y="94.0" fill="#6b7180">—</text>
+  <text x="22.0" y="112.0" fill="#e5e7eb">  w2:p1       </text>
+  <text x="156.4" y="112.0" fill="#49de80" font-weight="700">opencode</text>
+  <text x="233.2" y="112.0" fill="#e5e7eb">  </text>
+  <text x="252.4" y="112.0" fill="#facc15" font-weight="700">●</text>
+  <text x="262.0" y="112.0" fill="#e5e7eb"> working </text>
+  <text x="348.4" y="112.0" fill="#49de80">$0.61</text>
+  <text x="396.4" y="112.0" fill="#e5e7eb">     </text>
+  <text x="444.4" y="112.0" fill="#fb923c">glm-5.2</text>
+  <text x="511.6" y="112.0" fill="#e5e7eb">        </text>
+  <text x="588.4" y="112.0" fill="#6b7180">38</text>
+  <text x="607.6" y="112.0" fill="#e5e7eb">     </text>
+  <text x="655.6" y="112.0" fill="#6b7180">28</text>
+  <text x="22.0" y="130.0" fill="#e5e7eb">  w651685:p1  </text>
+  <text x="156.4" y="130.0" fill="#49de80" font-weight="700">opencode</text>
+  <text x="233.2" y="130.0" fill="#e5e7eb">  </text>
+  <text x="252.4" y="130.0" fill="#49de80">●</text>
+  <text x="262.0" y="130.0" fill="#e5e7eb"> idle    </text>
+  <text x="348.4" y="130.0" fill="#4b5563">—</text>
+  <text x="358.0" y="130.0" fill="#e5e7eb">         </text>
+  <text x="444.4" y="130.0" fill="#fb923c">gpt-5.5</text>
+  <text x="511.6" y="130.0" fill="#e5e7eb">        </text>
+  <text x="588.4" y="130.0" fill="#6b7180">227</text>
+  <text x="617.2" y="130.0" fill="#e5e7eb">    </text>
+  <text x="655.6" y="130.0" fill="#6b7180">303</text>
+  <text x="22.0" y="148.0" fill="#e5e7eb">  </text>
+  <text x="41.2" y="148.0" fill="#facc15">═══════════════════════════════════════════════════════════════════════</text>
+  <text x="22.0" y="166.0" fill="#e5e7eb">  </text>
+  <text x="41.2" y="166.0" fill="#facc15" font-weight="700">TOTAL                           $84.28                   </text>
+  <text x="588.4" y="166.0" fill="#e5e7eb" font-weight="700">3727</text>
+  <text x="626.8" y="166.0" fill="#e5e7eb">   </text>
+  <text x="655.6" y="166.0" fill="#e5e7eb" font-weight="700">331</text>
+  <text x="22.0" y="202.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="202.0" fill="#e5e7eb"> </text>
+  <text x="41.2" y="202.0" fill="#c083fc" font-weight="700">pi</text>
+  <text x="60.4" y="202.0" fill="#e5e7eb"> </text>
+  <text x="70.0" y="202.0" fill="#49de80">●</text>
+  <text x="79.6" y="202.0" fill="#e5e7eb"> idle  </text>
+  <text x="146.8" y="202.0" fill="#fb923c">gpt-5.5</text>
+  <text x="214.0" y="202.0" fill="#e5e7eb"> </text>
+  <text x="223.6" y="202.0" fill="#2cd3bf">(openai-codex)</text>
+  <text x="22.0" y="220.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="220.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="220.0" fill="#6b7180">cwd:</text>
+  <text x="98.8" y="220.0" fill="#e5e7eb"> </text>
+  <text x="108.4" y="220.0" fill="#e5e7eb" font-weight="700">/Users/davecodes/work/ai-tutor-core</text>
+  <text x="22.0" y="238.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="238.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="238.0" fill="#6b7180">session:</text>
+  <text x="137.2" y="238.0" fill="#e5e7eb"> </text>
+  <text x="146.8" y="238.0" fill="#e5e7eb" font-weight="700">2d0h</text>
+  <text x="185.2" y="238.0" fill="#e5e7eb">  </text>
+  <text x="204.4" y="238.0" fill="#6b7180">last:</text>
+  <text x="252.4" y="238.0" fill="#e5e7eb"> </text>
+  <text x="262.0" y="238.0" fill="#e5e7eb" font-weight="700">19:53</text>
+  <text x="22.0" y="256.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="256.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="256.0" fill="#6b7180">msgs: </text>
+  <text x="118.0" y="256.0" fill="#e5e7eb" font-weight="700">3462</text>
+  <text x="156.4" y="256.0" fill="#e5e7eb">  </text>
+  <text x="175.6" y="256.0" fill="#6b7180">compactions: </text>
+  <text x="300.4" y="256.0" fill="#facc15">8</text>
+  <text x="22.0" y="274.0" fill="#4b5563">┃</text>
+  <text x="22.0" y="310.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="310.0" fill="#e5e7eb"> </text>
+  <text x="41.2" y="310.0" fill="#49de80" font-weight="700">opencode</text>
+  <text x="118.0" y="310.0" fill="#e5e7eb"> </text>
+  <text x="127.6" y="310.0" fill="#facc15" font-weight="700">●</text>
+  <text x="137.2" y="310.0" fill="#e5e7eb"> working  </text>
+  <text x="233.2" y="310.0" fill="#fb923c">glm-5.2</text>
+  <text x="300.4" y="310.0" fill="#e5e7eb"> </text>
+  <text x="310.0" y="310.0" fill="#2cd3bf">(opencode-go)</text>
+  <text x="22.0" y="328.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="328.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="328.0" fill="#6b7180">title:</text>
+  <text x="118.0" y="328.0" fill="#e5e7eb"> </text>
+  <text x="127.6" y="328.0" fill="#e5e7eb" font-weight="700">Add Two Numbers work example</text>
+  <text x="22.0" y="346.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="346.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="346.0" fill="#6b7180">cwd:</text>
+  <text x="98.8" y="346.0" fill="#e5e7eb"> </text>
+  <text x="108.4" y="346.0" fill="#e5e7eb" font-weight="700">/Users/davecodes/DEV</text>
+  <text x="22.0" y="364.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="364.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="364.0" fill="#6b7180">session:</text>
+  <text x="137.2" y="364.0" fill="#e5e7eb"> </text>
+  <text x="146.8" y="364.0" fill="#e5e7eb" font-weight="700">2d11h</text>
+  <text x="194.8" y="364.0" fill="#e5e7eb">  </text>
+  <text x="214.0" y="364.0" fill="#6b7180">last:</text>
+  <text x="262.0" y="364.0" fill="#e5e7eb"> </text>
+  <text x="271.6" y="364.0" fill="#e5e7eb" font-weight="700">08:37</text>
+  <text x="22.0" y="382.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="382.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="382.0" fill="#6b7180">tokens:</text>
+  <text x="127.6" y="382.0" fill="#e5e7eb"> in:</text>
+  <text x="166.0" y="382.0" fill="#e5e7eb" font-weight="700">222.5k</text>
+  <text x="223.6" y="382.0" fill="#e5e7eb"> out:</text>
+  <text x="271.6" y="382.0" fill="#e5e7eb" font-weight="700">21.7k</text>
+  <text x="319.6" y="382.0" fill="#e5e7eb"> reason:</text>
+  <text x="396.4" y="382.0" fill="#e5e7eb" font-weight="700">0</text>
+  <text x="406.0" y="382.0" fill="#e5e7eb"> cache_r:</text>
+  <text x="492.4" y="382.0" fill="#49de80">767.3k</text>
+  <text x="550.0" y="382.0" fill="#e5e7eb"> cache_w:</text>
+  <text x="636.4" y="382.0" fill="#e5e7eb" font-weight="700">0</text>
+  <text x="22.0" y="400.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="400.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="400.0" fill="#6b7180">msgs: </text>
+  <text x="118.0" y="400.0" fill="#e5e7eb" font-weight="700">38</text>
+  <text x="22.0" y="418.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="418.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="418.0" fill="#6b7180">tools:</text>
+  <text x="118.0" y="418.0" fill="#e5e7eb"> </text>
+  <text x="127.6" y="418.0" fill="#e5e7eb" font-weight="700">write×10  bash×10  webfetch×6  compress×2</text>
+  <text x="22.0" y="436.0" fill="#4b5563">┃</text>
+  <text x="22.0" y="472.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="472.0" fill="#e5e7eb"> </text>
+  <text x="41.2" y="472.0" fill="#49de80" font-weight="700">opencode</text>
+  <text x="118.0" y="472.0" fill="#e5e7eb"> </text>
+  <text x="127.6" y="472.0" fill="#49de80">●</text>
+  <text x="137.2" y="472.0" fill="#e5e7eb"> idle  </text>
+  <text x="204.4" y="472.0" fill="#fb923c">gpt-5.5</text>
+  <text x="271.6" y="472.0" fill="#e5e7eb"> </text>
+  <text x="281.2" y="472.0" fill="#2cd3bf">(openai)</text>
+  <text x="22.0" y="490.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="490.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="490.0" fill="#6b7180">title:</text>
+  <text x="118.0" y="490.0" fill="#e5e7eb"> </text>
+  <text x="127.6" y="490.0" fill="#e5e7eb" font-weight="700">executor.sh usage guide</text>
+  <text x="22.0" y="508.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="508.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="508.0" fill="#6b7180">cwd:</text>
+  <text x="98.8" y="508.0" fill="#e5e7eb"> </text>
+  <text x="108.4" y="508.0" fill="#e5e7eb" font-weight="700">/Users/davecodes/work/ai-tutor-core</text>
+  <text x="22.0" y="526.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="526.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="526.0" fill="#6b7180">session:</text>
+  <text x="137.2" y="526.0" fill="#e5e7eb"> </text>
+  <text x="146.8" y="526.0" fill="#e5e7eb" font-weight="700">2h4m</text>
+  <text x="185.2" y="526.0" fill="#e5e7eb">  </text>
+  <text x="204.4" y="526.0" fill="#6b7180">last:</text>
+  <text x="252.4" y="526.0" fill="#e5e7eb"> </text>
+  <text x="262.0" y="526.0" fill="#e5e7eb" font-weight="700">12:40</text>
+  <text x="22.0" y="544.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="544.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="544.0" fill="#6b7180">tokens:</text>
+  <text x="127.6" y="544.0" fill="#e5e7eb"> in:</text>
+  <text x="166.0" y="544.0" fill="#e5e7eb" font-weight="700">1.2M</text>
+  <text x="204.4" y="544.0" fill="#e5e7eb"> out:</text>
+  <text x="252.4" y="544.0" fill="#e5e7eb" font-weight="700">81.3k</text>
+  <text x="300.4" y="544.0" fill="#e5e7eb"> reason:</text>
+  <text x="377.2" y="544.0" fill="#e5e7eb" font-weight="700">41.2k</text>
+  <text x="425.2" y="544.0" fill="#e5e7eb"> cache_r:</text>
+  <text x="511.6" y="544.0" fill="#49de80">21.3M</text>
+  <text x="559.6" y="544.0" fill="#e5e7eb"> cache_w:</text>
+  <text x="646.0" y="544.0" fill="#e5e7eb" font-weight="700">0</text>
+  <text x="22.0" y="562.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="562.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="562.0" fill="#6b7180">msgs: </text>
+  <text x="118.0" y="562.0" fill="#e5e7eb" font-weight="700">227</text>
+  <text x="22.0" y="580.0" fill="#4b5563">┃</text>
+  <text x="31.6" y="580.0" fill="#e5e7eb">   </text>
+  <text x="60.4" y="580.0" fill="#6b7180">tools:</text>
+  <text x="118.0" y="580.0" fill="#e5e7eb"> </text>
+  <text x="127.6" y="580.0" fill="#e5e7eb" font-weight="700">bash×112  read×74  apply_patch×26  grep×16  skill×15  webfetch×10  engram_mem_session_summary×10  glob×9  compress×8  engram_mem_save×8 </text>
+  <text x="22.0" y="598.0" fill="#4b5563">┃</text>
+  <text x="22.0" y="634.0" fill="#e5e7eb">  </text>
+  <text x="41.2" y="634.0" fill="#6b7180">panes: </text>
+  <text x="108.4" y="634.0" fill="#e5e7eb" font-weight="700">3</text>
+  <text x="118.0" y="634.0" fill="#e5e7eb">  </text>
+  <text x="137.2" y="634.0" fill="#6b7180">cost: </text>
+  <text x="194.8" y="634.0" fill="#facc15" font-weight="700">$84.28</text>
+  <text x="252.4" y="634.0" fill="#e5e7eb">  </text>
+  <text x="271.6" y="634.0" fill="#6b7180">in: </text>
+  <text x="310.0" y="634.0" fill="#e5e7eb" font-weight="700">1.4M</text>
+  <text x="348.4" y="634.0" fill="#e5e7eb">  </text>
+  <text x="367.6" y="634.0" fill="#6b7180">out: </text>
+  <text x="415.6" y="634.0" fill="#e5e7eb" font-weight="700">103.0k</text>
+  <text x="473.2" y="634.0" fill="#e5e7eb">  </text>
+  <text x="492.4" y="634.0" fill="#6b7180">cache: </text>
+  <text x="559.6" y="634.0" fill="#49de80">22.1M</text>
+  <text x="607.6" y="634.0" fill="#e5e7eb">  </text>
+  <text x="626.8" y="634.0" fill="#6b7180">msgs: </text>
+  <text x="684.4" y="634.0" fill="#e5e7eb" font-weight="700">3727</text>
+  <text x="722.8" y="634.0" fill="#e5e7eb">  </text>
+  <text x="742.0" y="634.0" fill="#6b7180">tools: </text>
+  <text x="809.2" y="634.0" fill="#e5e7eb" font-weight="700">331</text>
+  <text x="22.0" y="688.0" fill="#4b5563" font-style="italic">  r refresh  ·  q/esc close  ·  auto-refresh 3s</text>
 </svg>

@@ -102,6 +102,16 @@ Each agent gets a detail card showing:
 
 Requires [Go](https://go.dev/) 1.22+.
 
+## Updating the README image
+
+The preview image is generated from a real Herdr dashboard pane capture, not hand-drawn.
+
+```bash
+herdr plugin action invoke dave.token-dashboard.open-dashboard
+herdr pane read <dashboard-pane-id> --source visible --ansi > /tmp/dashboard.ansi
+scripts/capture-dashboard-preview.py /tmp/dashboard.ansi docs/dashboard-preview.svg
+```
+
 ## Requirements
 
 - [Herdr](https://herdr.dev) 0.7.0+
