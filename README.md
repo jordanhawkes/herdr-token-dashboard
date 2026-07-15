@@ -9,7 +9,7 @@ A [Herdr](https://herdr.dev) plugin that shows **live token spend** across all y
 - **Live dashboard** — Bubble Tea TUI with Lip Gloss styling, auto-refreshing every 3 seconds
 - **Per-agent breakdown** — cost, tokens (input/output/reasoning/cache), model, provider, session duration, message count, tool call stats
 - **Cost notifications** — Herdr native toast when an agent transitions to `done`, with cost and token summary
-- **Multi-agent support** — tracks both [Pi](https://github.com/nicepkg/pi) and [OpenCode](https://opencode.ai) agent sessions
+- **Multi-agent support** — tracks [Pi](https://github.com/nicepkg/pi), [OpenCode](https://opencode.ai), and [Claude Code](https://claude.com/claude-code) agent sessions
 - **Keybinding** — `prefix+$` opens the dashboard instantly
 
 ## Data Sources
@@ -19,6 +19,15 @@ A [Herdr](https://herdr.dev) plugin that shows **live token spend** across all y
 | Pi | Session JSONL (`agent_session.path`) | `sessionCostUsd`, model from `model_change`, message count, compaction count, session duration |
 | OpenCode (active) | Server API `http://127.0.0.1:4096/session/{id}` | Live cost, full token breakdown, model, provider, message count, tool calls |
 | OpenCode (completed) | Disk fallback `~/.local/share/opencode/storage/message/{id}/` | Same data from persisted message files |
+| Claude Code | Session transcript `~/.claude/projects/{project}/{session-id}.jsonl` | Full token breakdown (input/output/cache read/cache write), estimated cost, model, message count, tool calls, session duration |
+
+### Claude Code
+
+Claude Code panes are matched by their Herdr `agent_session` (source `herdr:claude`) and read from the session transcript JSONL that Claude Code writes under `~/.claude/projects/`. The transcript directory is derived from the pane's working directory; if that lookup misses (e.g. the pane changed directories after launch), the dashboard falls back to searching all project directories for the session ID.
+
+Streamed and retried transcript entries are deduplicated per assistant message, so token counts reflect actual API usage.
+
+> **Note:** Claude Code transcripts don't record cost, so the dashboard computes an **estimate** from a built-in pricing table (per-MTok list rates for current Anthropic models, including cache read/write multipliers). Unknown models show tokens but no cost. Rates live in one table in `main.go` and are easy to update.
 
 ## Install
 
@@ -73,7 +82,7 @@ Pane w2:p1 · msgs:38 · in:222.5k out:21.7k
 | Column | Description |
 |--------|-------------|
 | PANE | Compact pane ID |
-| AGENT | Agent name (pi / opencode) |
+| AGENT | Agent name (pi / opencode / claude) |
 | STATUS | Current agent status with colored dot |
 | COST | Session cost (green <$5, yellow <$25, red >$25) |
 | MODEL | Current model in use |
@@ -116,7 +125,7 @@ scripts/capture-dashboard-preview.py /tmp/dashboard.ansi docs/dashboard-preview.
 
 - [Herdr](https://herdr.dev) 0.7.0+
 - [Go](https://go.dev/) 1.22+ (for building from source)
-- [Pi](https://github.com/nicepkg/pi) and/or [OpenCode](https://opencode.ai) running in Herdr panes
+- [Pi](https://github.com/nicepkg/pi), [OpenCode](https://opencode.ai), and/or [Claude Code](https://claude.com/claude-code) running in Herdr panes
 
 ## Plugin Manifest
 
@@ -138,6 +147,8 @@ for each agent pane:
     Pi       → read JSONL → extract sessionCostUsd, model, messages, compactions
     OpenCode → query server API (127.0.0.1:4096) → extract cost, tokens, tools
               ↳ fallback to disk reads for completed sessions
+    Claude Code → read transcript JSONL (~/.claude/projects) → extract tokens,
+                  model, messages, tools; estimate cost from pricing table
     ↓
 aggregate per pane / workspace / total
     ↓

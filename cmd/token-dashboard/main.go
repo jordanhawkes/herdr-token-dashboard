@@ -59,8 +59,9 @@ var (
 			Foreground(yellow)
 
 	// Badges
-	piBadge = lipgloss.NewStyle().Foreground(purple).Bold(true)
-	ocBadge = lipgloss.NewStyle().Foreground(green).Bold(true)
+	piBadge     = lipgloss.NewStyle().Foreground(purple).Bold(true)
+	ocBadge     = lipgloss.NewStyle().Foreground(green).Bold(true)
+	claudeBadge = lipgloss.NewStyle().Foreground(orange).Bold(true)
 
 	// Cost tiers
 	costLow   = lipgloss.NewStyle().Foreground(green)
@@ -331,6 +332,8 @@ func agentBadge(agent string) string {
 		return piBadge.Render("pi")
 	case "opencode":
 		return ocBadge.Render("opencode")
+	case "claude":
+		return claudeBadge.Render("claude")
 	default:
 		return labelStyle.Render(fallback(agent, "—"))
 	}
@@ -849,6 +852,9 @@ func extractStats(p paneEntry) tokenStats {
 	case "herdr:opencode":
 		s.Source = "opencode"
 		readOpenCodeLive(p.AgentSession.Value, &s)
+	case "herdr:claude", "claude":
+		s.Source = "claude"
+		readClaudeSession(p.AgentSession.Value, p.Cwd, &s)
 	default:
 		if strings.HasSuffix(p.AgentSession.Value, ".jsonl") {
 			s.Source = "pi"
@@ -917,6 +923,216 @@ func readPiSession(path string, s *tokenStats) {
 			s.Compactions++
 		}
 	}
+
+	s.Started = firstTS
+	s.LastAct = lastTS
+	if !firstTS.IsZero() && !lastTS.IsZero() {
+		s.Duration = lastTS.Sub(firstTS)
+	}
+}
+
+// ── Claude Code sessions ────────────────────────────────────────────────────
+
+// claudePricing maps a model-id substring to estimated Anthropic per-MTok
+// USD rates. Prices are ESTIMATES based on public list pricing — update the
+// rates here when Anthropic pricing changes. Matching is by substring,
+// longest match first, so more specific entries (e.g. "sonnet-4-5") win over
+// broader ones ("sonnet-4"). Cache reads are billed at 0.1× the input rate,
+// cache writes at 1.25× the input rate. Unknown models get no cost estimate
+// (tokens are still shown).
+var claudePricing = []struct {
+	substr string
+	in     float64 // USD per MTok input
+	out    float64 // USD per MTok output
+}{
+	{"opus-4", 15, 75},
+	{"sonnet-4-5", 3, 15},
+	{"sonnet-4", 3, 15},
+	{"haiku-4-5", 1, 5},
+	{"fable-5", 20, 100},
+}
+
+// claudeRates returns the estimated per-MTok rates for a model id, matching
+// pricing-table substrings longest-first. ok is false for unknown models.
+func claudeRates(model string) (in, out float64, ok bool) {
+	best := -1
+	for _, p := range claudePricing {
+		if strings.Contains(model, p.substr) && len(p.substr) > best {
+			best = len(p.substr)
+			in, out = p.in, p.out
+			ok = true
+		}
+	}
+	return in, out, ok
+}
+
+// claudeCost estimates the USD cost of one assistant turn.
+func claudeCost(model string, input, output, cacheRead, cacheWrite int) float64 {
+	in, out, ok := claudeRates(model)
+	if !ok {
+		return 0
+	}
+	return (float64(input)*in +
+		float64(output)*out +
+		float64(cacheRead)*0.1*in +
+		float64(cacheWrite)*1.25*in) / 1_000_000
+}
+
+// claudeProjectsRoot returns the Claude Code projects directory
+// (~/.claude/projects). A variable so tests can point it at a fixture dir.
+var claudeProjectsRoot = func() string {
+	h := homeDir()
+	if h == "" {
+		return ""
+	}
+	return filepath.Join(h, ".claude", "projects")
+}
+
+// mungeClaudePath converts a working directory into the directory name
+// Claude Code uses under ~/.claude/projects: every character outside
+// [A-Za-z0-9-] is replaced by '-'.
+func mungeClaudePath(p string) string {
+	var b strings.Builder
+	for _, r := range p {
+		switch {
+		case r >= 'A' && r <= 'Z', r >= 'a' && r <= 'z', r >= '0' && r <= '9', r == '-':
+			b.WriteRune(r)
+		default:
+			b.WriteRune('-')
+		}
+	}
+	return b.String()
+}
+
+// claudeSessionPath locates the transcript for a Claude Code session. The
+// munged-cwd path is tried first; if it misses (e.g. the pane cwd changed
+// after launch), fall back to globbing every project dir — session UUIDs
+// are unique.
+func claudeSessionPath(sessionID, cwd string) string {
+	root := claudeProjectsRoot()
+	if root == "" || sessionID == "" {
+		return ""
+	}
+	if cwd != "" {
+		p := filepath.Join(root, mungeClaudePath(cwd), sessionID+".jsonl")
+		if _, err := os.Stat(p); err == nil {
+			return p
+		}
+	}
+	matches, err := filepath.Glob(filepath.Join(root, "*", sessionID+".jsonl"))
+	if err != nil || len(matches) == 0 {
+		return ""
+	}
+	return matches[0]
+}
+
+// readClaudeSession reads a Claude Code session transcript JSONL and
+// extracts tokens, estimated cost, model, message count, tool calls, and
+// session duration. Streaming and retries can repeat records for the same
+// assistant message, so usage is aggregated per (message.id, requestId)
+// pair — each unique pair counts once, last occurrence wins.
+func readClaudeSession(sessionID, cwd string, s *tokenStats) {
+	path := claudeSessionPath(sessionID, cwd)
+	if path == "" {
+		debugLog("claude transcript not found for session " + sessionID)
+		return
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return
+	}
+
+	type claudeTurn struct {
+		model                         string
+		input, output, cacheR, cacheW int
+	}
+	turns := map[string]claudeTurn{}
+	seenTools := map[string]bool{}
+	var firstTS, lastTS time.Time
+
+	for _, line := range bytes.Split(data, []byte("\n")) {
+		if len(line) == 0 {
+			continue
+		}
+		var entry struct {
+			Type      string `json:"type"`
+			Timestamp string `json:"timestamp"`
+			RequestID string `json:"requestId"`
+			Message   struct {
+				ID    string `json:"id"`
+				Model string `json:"model"`
+				Usage struct {
+					InputTokens              int `json:"input_tokens"`
+					OutputTokens             int `json:"output_tokens"`
+					CacheReadInputTokens     int `json:"cache_read_input_tokens"`
+					CacheCreationInputTokens int `json:"cache_creation_input_tokens"`
+				} `json:"usage"`
+				Content json.RawMessage `json:"content"`
+			} `json:"message"`
+		}
+		if json.Unmarshal(line, &entry) != nil {
+			continue
+		}
+
+		if entry.Timestamp != "" {
+			if ts, err := time.Parse(time.RFC3339Nano, entry.Timestamp); err == nil {
+				if firstTS.IsZero() {
+					firstTS = ts
+				}
+				lastTS = ts
+			}
+		}
+
+		if entry.Type != "assistant" || entry.Message.ID == "" {
+			continue
+		}
+
+		if entry.Message.Model != "" {
+			s.Model = entry.Message.Model
+			s.Provider = "anthropic"
+		}
+
+		turns[entry.Message.ID+"\x00"+entry.RequestID] = claudeTurn{
+			model:  entry.Message.Model,
+			input:  entry.Message.Usage.InputTokens,
+			output: entry.Message.Usage.OutputTokens,
+			cacheR: entry.Message.Usage.CacheReadInputTokens,
+			cacheW: entry.Message.Usage.CacheCreationInputTokens,
+		}
+
+		// Tool calls appear as tool_use content blocks. Blocks carry unique
+		// ids, so repeated records for the same message don't double-count.
+		var blocks []struct {
+			Type string `json:"type"`
+			ID   string `json:"id"`
+			Name string `json:"name"`
+		}
+		if len(entry.Message.Content) == 0 || json.Unmarshal(entry.Message.Content, &blocks) != nil {
+			continue
+		}
+		for _, blk := range blocks {
+			if blk.Type != "tool_use" || blk.Name == "" {
+				continue
+			}
+			if blk.ID != "" {
+				if seenTools[blk.ID] {
+					continue
+				}
+				seenTools[blk.ID] = true
+			}
+			s.Tools[blk.Name]++
+			s.ToolTotal++
+		}
+	}
+
+	for _, t := range turns {
+		s.InputT += t.input
+		s.OutputT += t.output
+		s.CacheR += t.cacheR
+		s.CacheW += t.cacheW
+		s.Cost += claudeCost(t.model, t.input, t.output, t.cacheR, t.cacheW)
+	}
+	s.Messages = len(turns)
 
 	s.Started = firstTS
 	s.LastAct = lastTS
