@@ -945,11 +945,22 @@ var claudePricing = []struct {
 	in     float64 // USD per MTok input
 	out    float64 // USD per MTok output
 }{
+	{"opus-5", 5, 25},
+	{"sonnet-5", 3, 15},
+	{"fable-5", 10, 50},
+	{"mythos-5", 10, 50},
+	// Opus 4.5 through 4.8 are $5/$25 — they must be listed explicitly, because
+	// the bare "opus-4" entry below substring-matches them and would otherwise
+	// price them at the legacy Opus 4 / 4.1 rate.
+	{"opus-4-8", 5, 25},
+	{"opus-4-7", 5, 25},
+	{"opus-4-6", 5, 25},
+	{"opus-4-5", 5, 25},
 	{"opus-4", 15, 75},
+	{"sonnet-4-6", 3, 15},
 	{"sonnet-4-5", 3, 15},
 	{"sonnet-4", 3, 15},
 	{"haiku-4-5", 1, 5},
-	{"fable-5", 20, 100},
 }
 
 // claudeRates returns the estimated per-MTok rates for a model id, matching

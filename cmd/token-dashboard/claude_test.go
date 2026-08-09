@@ -63,9 +63,10 @@ func TestReadClaudeSession(t *testing.T) {
 			wantOut:    550,
 			wantCacheR: 2000,
 			wantCacheW: 3000,
-			// opus-4: (1000*15 + 500*75 + 2000*1.5 + 3000*18.75)/1e6
-			//       + (100*15 + 50*75)/1e6
-			wantCost:     0.11175 + 0.00525,
+			// opus-4-8 at $5/$25 (cache read 0.1x in, cache write 1.25x in):
+			// (1000*5 + 500*25 + 2000*0.5 + 3000*6.25)/1e6
+			//       + (100*5 + 50*25)/1e6
+			wantCost:     0.03725 + 0.00175,
 			wantModel:    "claude-opus-4-8",
 			wantProvider: "anthropic",
 			wantTools:    map[string]int{"Bash": 1, "Read": 1},
@@ -130,8 +131,8 @@ func TestReadClaudeSession(t *testing.T) {
 			wantMsgs: 1,
 			wantIn:   10,
 			wantOut:  20,
-			// fable-5: (10*20 + 20*100)/1e6
-			wantCost:     0.0022,
+			// fable-5: (10*10 + 20*50)/1e6
+			wantCost:     0.0011,
 			wantModel:    "claude-fable-5",
 			wantProvider: "anthropic",
 			wantTools:    map[string]int{},
@@ -213,11 +214,14 @@ func TestClaudeRates(t *testing.T) {
 		wantIn float64
 		wantOK bool
 	}{
-		{"claude-opus-4-8", 15, true},
+		{"claude-opus-4-8", 5, true},
+		{"claude-opus-5", 5, true},
+		{"claude-sonnet-5", 3, true},
+		{"claude-opus-4-1", 15, true},
 		{"claude-sonnet-4-5", 3, true},
 		{"claude-sonnet-4-20250514", 3, true},
 		{"claude-haiku-4-5", 1, true},
-		{"claude-fable-5", 20, true},
+		{"claude-fable-5", 10, true},
 		{"some-future-model", 0, false},
 		{"", 0, false},
 	}
