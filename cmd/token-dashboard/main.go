@@ -102,6 +102,7 @@ type paneEntry struct {
 	Agent        string        `json:"agent,omitempty"`
 	AgentStatus  string        `json:"agent_status,omitempty"`
 	Label        string        `json:"label,omitempty"`
+	TabID        string        `json:"tab_id,omitempty"`
 	Cwd          string        `json:"cwd,omitempty"`
 	AgentSession *agentSession `json:"agent_session,omitempty"`
 }
@@ -145,6 +146,7 @@ type tokenStats struct {
 	Tools       map[string]int
 	ToolTotal   int
 	Title       string
+	TabLabel    string
 }
 
 // OpenCode server API response types.
@@ -498,7 +500,7 @@ func renderTable(stats []tokenStats, total tokenStats, width int) string {
 		}
 
 		rowParts := []string{
-			padRight(shortPaneID(s.PaneID), wPane),
+			padRight(paneDisplay(s), wPane),
 			padRight(agentBadge(s.Agent), wAgent),
 			padRight(statusStr, wStatus),
 			padRight(costS.Render(costStr), wCost),
@@ -562,6 +564,12 @@ func renderCard(s tokenStats, width int) string {
 	// Card with left border
 	var inner strings.Builder
 	inner.WriteString(headerLine + "\n")
+
+	// Pane id — the table column may be showing the tab label instead.
+	inner.WriteString(fmt.Sprintf("  %s %s\n",
+		labelStyle.Render("pane:"),
+		valueStyle.Render(shortPaneID(s.PaneID)),
+	))
 
 	// Title
 	if s.Title != "" {
@@ -819,8 +827,51 @@ func fetchPanes() ([]paneEntry, error) {
 	return resp.Result.Panes, nil
 }
 
+// fetchTabLabels maps tab_id -> tab label. Best effort: on any failure it
+// returns an empty map and the PANE column falls back to the short pane id.
+func fetchTabLabels() map[string]string {
+	labels := map[string]string{}
+	herdr := os.Getenv("HERDR_BIN_PATH")
+	if herdr == "" {
+		herdr = "herdr"
+	}
+	cmd := exec.Command(herdr, "tab", "list")
+	var stdout bytes.Buffer
+	cmd.Stdout = &stdout
+	if err := cmd.Run(); err != nil {
+		return labels
+	}
+	var resp struct {
+		Result struct {
+			Tabs []struct {
+				TabID string `json:"tab_id"`
+				Label string `json:"label"`
+			} `json:"tabs"`
+		} `json:"result"`
+	}
+	if err := json.Unmarshal(stdout.Bytes(), &resp); err != nil {
+		return labels
+	}
+	for _, t := range resp.Result.Tabs {
+		if t.Label != "" {
+			labels[t.TabID] = t.Label
+		}
+	}
+	return labels
+}
+
+// paneDisplay is the PANE column value: the tab label when the pane's tab has
+// one, else the short pane id.
+func paneDisplay(s tokenStats) string {
+	if s.TabLabel != "" {
+		return s.TabLabel
+	}
+	return shortPaneID(s.PaneID)
+}
+
 func collectStats(panes []paneEntry) []tokenStats {
 	var stats []tokenStats
+	tabLabels := fetchTabLabels()
 	for _, p := range panes {
 		if p.AgentSession == nil {
 			continue
@@ -828,6 +879,7 @@ func collectStats(panes []paneEntry) []tokenStats {
 		s := extractStats(p)
 		s.Status = p.AgentStatus
 		s.Cwd = p.Cwd
+		s.TabLabel = tabLabels[p.TabID]
 		stats = append(stats, s)
 	}
 	sort.Slice(stats, func(i, j int) bool { return stats[i].Cost > stats[j].Cost })
